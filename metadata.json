@@ -1,0 +1,6 @@
+{
+  "name": "Organizational Development Intelligence Engine",
+  "description": "Analyze unstructured employee feedback, evaluate workplace sentiment, extract dominant themes, and map workforce friction to actionable no-code operational strategies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
