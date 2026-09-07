@@ -55,7 +55,17 @@ ${analysis.mckinsey7s.map(d => `| **${d.dimension}** | ${d.healthScore}/100 | ${
 
 ---
 
-## 3. Burke-Litwin Causality Mapping
+## 3. Prosci ADKAR® Change Management Readiness
+- **Overall Adoption Readiness Index**: ${analysis.adkarOverallReadiness || 52}%
+- **Primary Sequential Barrier Point**: **${analysis.adkarBarrierPoint || 'Awareness'}** *(Downstream adoption will stall until this stage is resolved)*
+
+| Stage | Score | Status | Dimension | Suggested No-Code Intervention Lever |
+| :--- | :--- | :--- | :--- | :--- |
+${(analysis.adkar || []).map(a => `| **${a.stage}** (${a.fullName}) | ${a.score}/100 | ${a.status} | ${a.readinessDimension} | ${a.suggestedNoCodeTool} |`).join('\n')}
+
+---
+
+## 4. Burke-Litwin Causality Mapping
 ### Transformational Factors (Strategy, Culture, Leadership)
 ${analysis.burkeLitwin.filter(b => b.layer === 'Transformational').map(b => `- **${b.factor} (${b.status})**: ${b.identifiedIssue}`).join('\n')}
 
@@ -64,7 +74,7 @@ ${analysis.burkeLitwin.filter(b => b.layer === 'Transactional').map(b => `- **${
 
 ---
 
-## 4. Workforce Friction Points & Actionable No-Code Operational Strategies
+## 5. Workforce Friction Points & Actionable No-Code Operational Strategies
 
 ${analysis.frictionPoints.map(f => {
   const strat = analysis.strategies.find(s => s.id === f.strategyId || s.frictionPointId === f.id);

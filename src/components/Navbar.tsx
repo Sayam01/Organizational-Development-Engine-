@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-500 hidden sm:block">
-                Workforce Sentiment • 7S & Burke-Litwin • No-Code Levers
+                Workforce Sentiment • 7S, Burke-Litwin & ADKAR • No-Code Levers
               </p>
             </div>
           </div>

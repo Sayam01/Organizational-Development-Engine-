@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { SentimentOverview } from './components/SentimentOverview';
 import { McKinsey7SRadar } from './components/McKinsey7SRadar';
 import { BurkeLitwinMap } from './components/BurkeLitwinMap';
+import { ADKARChangeModel } from './components/ADKARChangeModel';
 import { DominantThemesMatrix } from './components/DominantThemesMatrix';
 import { FrictionToStrategyWorkbench } from './components/FrictionToStrategyWorkbench';
 import { WorkflowBlueprintVisualizer } from './components/WorkflowBlueprintVisualizer';
@@ -76,6 +77,9 @@ export function App() {
                 disengagement: 10,
               },
               dominantThemes: aiAnalysis.dominantThemes?.length ? aiAnalysis.dominantThemes : analysis.dominantThemes,
+              adkar: aiAnalysis.adkar?.length ? aiAnalysis.adkar : analysis.adkar,
+              adkarBarrierPoint: aiAnalysis.adkarBarrierPoint || analysis.adkarBarrierPoint,
+              adkarOverallReadiness: typeof aiAnalysis.adkarOverallReadiness === 'number' ? aiAnalysis.adkarOverallReadiness : analysis.adkarOverallReadiness,
               frictionPoints: aiAnalysis.frictionPoints?.length ? aiAnalysis.frictionPoints : analysis.frictionPoints,
               strategies: aiAnalysis.strategies?.length ? aiAnalysis.strategies : analysis.strategies,
             };
@@ -152,8 +156,18 @@ export function App() {
               onNavigateToFriction={() => setActiveTab('friction')}
             />
 
+            {/* Prosci ADKAR Change Readiness Pipeline */}
+            <ADKARChangeModel 
+              diagnostics={analysis.adkar || []}
+              rawFeedback={analysis.rawFeedbackItems || feedbackItems}
+              overallReadiness={analysis.adkarOverallReadiness}
+              barrierPoint={analysis.adkarBarrierPoint}
+            />
+
+            {/* McKinsey 7S Alignment Diagnostic */}
             <McKinsey7SRadar diagnostics={analysis.mckinsey7s} />
 
+            {/* Burke-Litwin Causal Model & Themes */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <BurkeLitwinMap diagnostics={analysis.burkeLitwin} />
               <DominantThemesMatrix themes={analysis.dominantThemes} />
@@ -271,7 +285,7 @@ export function App() {
 
           {/* Sub-bar */}
           <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
-            <span>McKinsey 7S Framework • Burke-Litwin Causal Model • LDA Semantic Clustering • No-Code Levers</span>
+            <span>McKinsey 7S Framework • Burke-Litwin Model • Prosci ADKAR® Change Framework • No-Code Levers</span>
             <span>Enterprise Organizational Development & Operational Intelligence</span>
           </div>
         </div>

@@ -25,6 +25,8 @@ export type Department =
   | 'Operations & HR' 
   | 'Cross-functional';
 
+export type ADKARStage = 'Awareness' | 'Desire' | 'Knowledge' | 'Ability' | 'Reinforcement';
+
 export interface FeedbackItem {
   id: string;
   text: string;
@@ -37,6 +39,7 @@ export interface FeedbackItem {
   odFrameworkMapping: {
     mckinsey7s: 'Strategy' | 'Structure' | 'Systems' | 'Shared Values' | 'Style' | 'Staff' | 'Skills';
     burkeLitwin: 'Mission/Strategy' | 'Leadership' | 'Culture' | 'Structure' | 'Management Practices' | 'Systems' | 'Work Unit Climate' | 'Motivation' | 'Individual Needs';
+    adkar: ADKARStage;
   };
   timestamp?: string;
   extractedKeywords: string[];
@@ -74,6 +77,21 @@ export interface BurkeLitwinDiagnostic {
   identifiedIssue: string;
 }
 
+export interface ADKARDiagnostic {
+  stage: ADKARStage;
+  fullName: string;
+  score: number; // 0 - 100
+  status: 'Critical Barrier' | 'Friction Gap' | 'Progressing' | 'Empowered';
+  isBarrierPoint: boolean; // First stage in sequential pipeline scoring < 60%
+  summary: string;
+  signalsCount: number;
+  workforceVoiceGaps: string[];
+  prescribedTactics: string[];
+  suggestedNoCodeTool: string;
+  evidenceQuotes: string[];
+  readinessDimension: 'Cognitive' | 'Motivational' | 'Capability' | 'Operational' | 'Sustenance';
+}
+
 export type FrictionArchetype = 
   | 'Archetype A: Information Asymmetry & Silos'
   | 'Archetype B: Feedback Latency & Recognition Gap'
@@ -98,6 +116,7 @@ export interface NoCodeStrategy {
   frictionPointId: string;
   title: string;
   archetype: FrictionArchetype;
+  adkarStage?: ADKARStage;
   summary: string;
   targetTools: {
     name: string;
@@ -144,6 +163,7 @@ export interface FrictionPoint {
   frameworkAttribution: {
     mckinsey: string;
     burkeLitwin: string;
+    adkar?: string;
   };
   strategyId: string;
 }
@@ -166,6 +186,9 @@ export interface ODAnalysisResult {
   dominantThemes: ThemeCluster[];
   mckinsey7s: McKinsey7SDiagnostic[];
   burkeLitwin: BurkeLitwinDiagnostic[];
+  adkar: ADKARDiagnostic[];
+  adkarBarrierPoint?: ADKARStage;
+  adkarOverallReadiness?: number;
   frictionPoints: FrictionPoint[];
   strategies: NoCodeStrategy[];
   rawFeedbackItems: FeedbackItem[];

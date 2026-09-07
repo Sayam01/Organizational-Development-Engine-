@@ -71,7 +71,8 @@ Context / Industry Info: "${context || "General Enterprise / Tech Scale-Up"}"
 Analyze the human signals, perform Latent Dirichlet Allocation (LDA) theme extraction, valence analysis (-1.0 to +1.0), and map friction points directly to:
 1. McKinsey 7S Framework (Strategy, Structure, Systems, Shared Values, Style, Staff, Skills)
 2. Burke-Litwin Model (Transformational & Transactional factors)
-3. Actionable No-Code Operational Strategies (using Notion, Airtable, Make.com, Zapier, Slack Bots, Monday.com, Looker Studio, Typeform, etc.)
+3. Prosci ADKAR Change Model (Awareness, Desire, Knowledge, Ability, Reinforcement) - Identify the first sequential Barrier Point (stage with score < 60) and overall readiness score (0-100).
+4. Actionable No-Code Operational Strategies (using Notion, Airtable, Make.com, Zapier, Slack Bots, Monday.com, Looker Studio, Typeform, etc.)
 
 Return ONLY valid JSON matching this exact structure:
 {
@@ -108,6 +109,24 @@ Return ONLY valid JSON matching this exact structure:
       "evidenceQuotes": ["Quote..."]
     }
   ],
+  "adkar": [
+    {
+      "stage": "Awareness",
+      "fullName": "Awareness of the Need for Change",
+      "score": 54,
+      "status": "Friction Gap",
+      "isBarrierPoint": true,
+      "summary": "Specific stage diagnostic summary...",
+      "signalsCount": 3,
+      "workforceVoiceGaps": ["Gap 1", "Gap 2"],
+      "prescribedTactics": ["Tactic 1", "Tactic 2"],
+      "suggestedNoCodeTool": "Notion PRD & Loom Executive Briefs",
+      "evidenceQuotes": ["Quote..."],
+      "readinessDimension": "Cognitive"
+    }
+  ],
+  "adkarBarrierPoint": "Awareness",
+  "adkarOverallReadiness": 52,
   "frictionPoints": [
     {
       "id": "fric-ai-1",

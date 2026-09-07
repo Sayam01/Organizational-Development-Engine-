@@ -1,4 +1,4 @@
-import { FeedbackItem, ODAnalysisResult, ThemeCluster, McKinsey7SDiagnostic, BurkeLitwinDiagnostic, FrictionPoint, NoCodeStrategy, FrictionArchetype } from '../types/od';
+import { FeedbackItem, ODAnalysisResult, ThemeCluster, McKinsey7SDiagnostic, BurkeLitwinDiagnostic, FrictionPoint, NoCodeStrategy, FrictionArchetype, ADKARDiagnostic, ADKARStage } from '../types/od';
 
 export function parseRawFeedback(rawText: string): FeedbackItem[] {
   if (!rawText.trim()) return [];
@@ -161,25 +161,44 @@ export function mapToFrameworks(text: string): FeedbackItem['odFrameworkMapping'
   // McKinsey 7S
   let mckinsey: FeedbackItem['odFrameworkMapping']['mckinsey7s'] = 'Systems';
   let burkeLitwin: FeedbackItem['odFrameworkMapping']['burkeLitwin'] = 'Systems';
+  let adkar: ADKARStage = 'Ability';
 
   if (lower.includes('responsible') || lower.includes('ownership') || lower.includes('approval') || lower.includes('signature') || lower.includes('hierarchy') || lower.includes('veto')) {
     mckinsey = 'Structure';
     burkeLitwin = 'Structure';
+    adkar = 'Awareness';
   } else if (lower.includes('manager') || lower.includes('1-on-1') || lower.includes('review') || lower.includes('coaching') || lower.includes('leadership')) {
     mckinsey = 'Style';
     burkeLitwin = 'Management Practices';
+    adkar = 'Desire';
   } else if (lower.includes('unnoticed') || lower.includes('recognition') || lower.includes('kudos') || lower.includes('value') || lower.includes('merit') || lower.includes('climate')) {
     mckinsey = 'Shared Values';
     burkeLitwin = 'Work Unit Climate';
+    adkar = 'Reinforcement';
   } else if (lower.includes('sales') || lower.includes('roadmap') || lower.includes('strategy') || lower.includes('mission') || lower.includes('priority')) {
     mckinsey = 'Strategy';
     burkeLitwin = 'Mission/Strategy';
+    adkar = 'Awareness';
   } else if (lower.includes('skill') || lower.includes('training') || lower.includes('literacy')) {
     mckinsey = 'Skills';
     burkeLitwin = 'Individual Needs';
+    adkar = 'Knowledge';
   }
 
-  return { mckinsey7s: mckinsey, burkeLitwin };
+  // Refine ADKAR stage mapping with specific change signals
+  if (lower.includes('why') || lower.includes('unclear why') || lower.includes('direction') || lower.includes('purpose') || lower.includes('never know who') || lower.includes('announced') || lower.includes('veto')) {
+    adkar = 'Awareness';
+  } else if (lower.includes('buy-in') || lower.includes('reluctant') || lower.includes('morale') || lower.includes('disengage') || lower.includes('politics') || lower.includes('merit')) {
+    adkar = 'Desire';
+  } else if (lower.includes('training') || lower.includes('confusing') || lower.includes('guide') || lower.includes('instructions') || lower.includes('onboarding') || lower.includes('find who is on-call') || lower.includes('lost')) {
+    adkar = 'Knowledge';
+  } else if (lower.includes('time') || lower.includes('bandwidth') || lower.includes('hours') || lower.includes('reconcil') || lower.includes('bottleneck') || lower.includes('manual') || lower.includes('overwhelm') || lower.includes('exhaust')) {
+    adkar = 'Ability';
+  } else if (lower.includes('kudos') || lower.includes('recognition') || lower.includes('celebrate') || lower.includes('reward') || lower.includes('sustain') || lower.includes('reverted') || lower.includes('unnoticed') || lower.includes('yearly')) {
+    adkar = 'Reinforcement';
+  }
+
+  return { mckinsey7s: mckinsey, burkeLitwin, adkar };
 }
 
 export function extractDominantThemeName(text: string): string {
@@ -333,6 +352,140 @@ export function generateCompleteODAnalysis(feedbackItems: FeedbackItem[], custom
       identifiedIssue: matching.length > 0 ? matching[0].dominantTheme : 'Operating at baseline nominal state.'
     };
   });
+
+  // Compute ADKAR Change Readiness Diagnostics
+  const adkarStages: ADKARStage[] = ['Awareness', 'Desire', 'Knowledge', 'Ability', 'Reinforcement'];
+  const adkarStageMeta: Record<ADKARStage, {
+    fullName: string;
+    dimension: 'Cognitive' | 'Motivational' | 'Capability' | 'Operational' | 'Sustenance';
+    noCodeTool: string;
+    defaultGaps: string[];
+    tactics: string[];
+  }> = {
+    Awareness: {
+      fullName: 'Awareness of Need for Change',
+      dimension: 'Cognitive',
+      noCodeTool: 'Notion PRD & Loom Executive Briefs',
+      defaultGaps: [
+        'Employees unclear on strategic rationale behind process modifications',
+        'Directives arrive without context on status quo breakdown costs'
+      ],
+      tactics: [
+        'Executive Sponsor Roadshow with live interactive Slido Q&A',
+        'Centralized Notion "Why We Are Changing" contextual hubs',
+        '2-minute asynchronous Loom video walk-throughs from project champions'
+      ]
+    },
+    Desire: {
+      fullName: 'Desire to Support & Participate',
+      dimension: 'Motivational',
+      noCodeTool: 'Slack Co-Design Channels & Typeform Pulse',
+      defaultGaps: [
+        'Passive resistance from perceived overhead and reporting burdens',
+        'Lack of explicit "What is in it for me?" (WIIFM) personal relief'
+      ],
+      tactics: [
+        'Cross-functional co-design sessions to incorporate front-line input',
+        'Explicitly showcase individual time savings (cutting 2 hrs/day of sync overhead)',
+        'Empower peer change champions across each impacted functional team'
+      ]
+    },
+    Knowledge: {
+      fullName: 'Knowledge on How to Change',
+      dimension: 'Capability',
+      noCodeTool: 'Scribe / Tango Interactive SOPs & Guru Cards',
+      defaultGaps: [
+        'Documentation scattered across Google Docs, wikis, and chat threads',
+        'High cognitive load and hesitation around new tool configurations'
+      ],
+      tactics: [
+        'Auto-generated step-by-step visual guides via Scribe/Tango',
+        'Contextual tooltips embedded directly into Airtable/Monday fields',
+        'Weekly 15-minute "Office Hours" and sandbox practice environments'
+      ]
+    },
+    Ability: {
+      fullName: 'Ability to Implement & Execute',
+      dimension: 'Operational',
+      noCodeTool: 'Zapier / Make.com Automated Guardrails',
+      defaultGaps: [
+        'Heavy workload and firefighting prevents adopting streamlined workflows',
+        'Fear of breaking dependencies during high-pressure releases'
+      ],
+      tactics: [
+        'Eliminate manual data re-entry with Make.com event triggers',
+        'Establish protected 2-hour weekly "process optimization" blocks',
+        '1-on-1 coaching by designated operational enablement leads'
+      ]
+    },
+    Reinforcement: {
+      fullName: 'Reinforcement to Sustain Habits',
+      dimension: 'Sustenance',
+      noCodeTool: 'Slack Kudos Bot & Looker Studio Dashboards',
+      defaultGaps: [
+        'Teams quietly revert to shadow spreadsheets once executive spotlight shifts',
+        'Absence of recognition for operational rigor and process adherence'
+      ],
+      tactics: [
+        'Automate public Slack kudos cards celebrating team adoption milestones',
+        'Live Looker Studio dashboard tracking cycle time drops and user adoption',
+        'Incorporate process hygiene into quarterly performance calibrations'
+      ]
+    }
+  };
+
+  let barrierPointFound: ADKARStage | null = null;
+
+  const adkar: ADKARDiagnostic[] = adkarStages.map(stage => {
+    const matching = feedbackItems.filter(f => f.odFrameworkMapping?.adkar === stage);
+    const count = matching.length;
+    let score = 65;
+    if (count > 0) {
+      const avgVal = matching.reduce((acc, curr) => acc + curr.sentimentValence, 0) / count;
+      score = Math.max(15, Math.min(95, Math.round(60 + (avgVal * 40))));
+    }
+
+    let status: ADKARDiagnostic['status'] = 'Progressing';
+    if (score < 45) status = 'Critical Barrier';
+    else if (score < 60) status = 'Friction Gap';
+    else if (score >= 80) status = 'Empowered';
+
+    const meta = adkarStageMeta[stage];
+    
+    // First stage scoring below 60 is the sequential Barrier Point
+    let isBarrierPoint = false;
+    if (score < 60 && !barrierPointFound) {
+      isBarrierPoint = true;
+      barrierPointFound = stage;
+    }
+
+    const sampleEvidence = matching.slice(0, 2).map(m => `"${m.text.substring(0, 120)}..."`);
+
+    return {
+      stage,
+      fullName: meta.fullName,
+      score,
+      status,
+      isBarrierPoint,
+      summary: `${stage} stage reflects an adoption score of ${score}/100 based on ${count} signals. ${isBarrierPoint ? 'Identified as current primary barrier point.' : ''}`,
+      signalsCount: count,
+      workforceVoiceGaps: meta.defaultGaps,
+      prescribedTactics: meta.tactics,
+      suggestedNoCodeTool: meta.noCodeTool,
+      evidenceQuotes: sampleEvidence.length > 0 ? sampleEvidence : ['Operating at baseline readiness.'],
+      readinessDimension: meta.dimension
+    };
+  });
+
+  if (!barrierPointFound) {
+    const lowest = [...adkar].sort((a, b) => a.score - b.score)[0];
+    if (lowest) {
+      lowest.isBarrierPoint = true;
+      barrierPointFound = lowest.stage;
+    }
+  }
+
+  const adkarOverallReadiness = Math.round(adkar.reduce((sum, item) => sum + item.score, 0) / adkar.length);
 
   // Synthesize Friction Points & No-Code Strategies
   const frictionPoints: FrictionPoint[] = [];
@@ -732,6 +885,9 @@ export function generateCompleteODAnalysis(feedbackItems: FeedbackItem[], custom
     dominantThemes,
     mckinsey7s,
     burkeLitwin,
+    adkar,
+    adkarBarrierPoint: barrierPointFound || 'Awareness',
+    adkarOverallReadiness,
     frictionPoints,
     strategies,
     rawFeedbackItems: feedbackItems

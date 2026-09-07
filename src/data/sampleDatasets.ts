@@ -6,6 +6,7 @@ import {
   ThemeCluster, 
   McKinsey7SDiagnostic, 
   BurkeLitwinDiagnostic,
+  ADKARDiagnostic,
   DatasetPreset
 } from '../types/od';
 
@@ -22,6 +23,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Structure',
       burkeLitwin: 'Structure',
+      adkar: 'Awareness'
     },
     extractedKeywords: ['decision', 'architecture', 'ownership', 'veto', 'debate']
   },
@@ -37,6 +39,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Systems',
       burkeLitwin: 'Systems',
+      adkar: 'Ability'
     },
     extractedKeywords: ['tool fatigue', 'Jira', 'Linear', 'reconciling', 'inefficiency']
   },
@@ -52,6 +55,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Style',
       burkeLitwin: 'Management Practices',
+      adkar: 'Desire'
     },
     extractedKeywords: ['manager', 'yearly review', 'career progression', 'isolation', 'feedback latency']
   },
@@ -67,6 +71,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Shared Values',
       burkeLitwin: 'Work Unit Climate',
+      adkar: 'Reinforcement'
     },
     extractedKeywords: ['unnoticed', 'recognition', 'troubleshooting', 'morale', 'leadership disconnect']
   },
@@ -82,6 +87,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Strategy',
       burkeLitwin: 'Mission/Strategy',
+      adkar: 'Awareness'
     },
     extractedKeywords: ['roadmap', 'sales promises', 'emergency fire drills', 'intake', 'silo']
   },
@@ -97,6 +103,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Structure',
       burkeLitwin: 'Structure',
+      adkar: 'Ability'
     },
     extractedKeywords: ['approval', 'signatures', 'waiting', 'email thread', 'bottleneck']
   },
@@ -112,6 +119,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Systems',
       burkeLitwin: 'Systems',
+      adkar: 'Knowledge'
     },
     extractedKeywords: ['handoff', 'Figma', 'brick wall', 'specifications', 'notifications']
   },
@@ -127,6 +135,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Shared Values',
       burkeLitwin: 'Culture',
+      adkar: 'Desire'
     },
     extractedKeywords: ['core values', 'promotions', 'politics', 'merit', 'erosion']
   },
@@ -142,6 +151,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Systems',
       burkeLitwin: 'Systems',
+      adkar: 'Ability'
     },
     extractedKeywords: ['team spirit', 'velocity', 'spreadsheet', 'automation', 'alerts']
   },
@@ -157,6 +167,7 @@ export const TECH_SCALEUP_FEEDBACK: FeedbackItem[] = [
     odFrameworkMapping: {
       mckinsey7s: 'Systems',
       burkeLitwin: 'Systems',
+      adkar: 'Knowledge'
     },
     extractedKeywords: ['escalation', 'on-call', 'PagerDuty', 'sync', 'incident']
   }
@@ -187,7 +198,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'Moderate',
         primaryEmotion: 'Frustration',
         dominantTheme: 'Async Decision Latency',
-        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Systems' },
+        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Systems', adkar: 'Ability' },
         extractedKeywords: ['timezones', 'Slack', 'async', 'decision log']
       },
       {
@@ -199,7 +210,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'High',
         primaryEmotion: 'Disengagement',
         dominantTheme: 'Recognition Invisibility & Isolation',
-        odFrameworkMapping: { mckinsey7s: 'Shared Values', burkeLitwin: 'Work Unit Climate' },
+        odFrameworkMapping: { mckinsey7s: 'Shared Values', burkeLitwin: 'Work Unit Climate', adkar: 'Reinforcement' },
         extractedKeywords: ['remote', 'isolation', 'peer recognition', 'shared wins']
       },
       {
@@ -211,7 +222,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'High',
         primaryEmotion: 'Ambiguity',
         dominantTheme: 'Multi-tool Truth Disconnect',
-        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Systems' },
+        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Systems', adkar: 'Knowledge' },
         extractedKeywords: ['source of truth', 'Google Docs', 'Asana', 'Harvest', 'budget']
       },
       {
@@ -223,7 +234,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'Moderate',
         primaryEmotion: 'Constructive Suggestion',
         dominantTheme: 'Action Item Follow-through Gap',
-        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Management Practices' },
+        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Management Practices', adkar: 'Reinforcement' },
         extractedKeywords: ['retrospectives', 'action items', 'Miro', 'follow-through']
       }
     ]
@@ -244,7 +255,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'Severe',
         primaryEmotion: 'Frustration',
         dominantTheme: 'Handover Information Asymmetry',
-        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Systems' },
+        odFrameworkMapping: { mckinsey7s: 'Systems', burkeLitwin: 'Systems', adkar: 'Ability' },
         extractedKeywords: ['shift handoff', 'dry-erase', 'patient updates', 'safety']
       },
       {
@@ -256,7 +267,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'High',
         primaryEmotion: 'Exhaustion',
         dominantTheme: 'Manual Approval Latency',
-        odFrameworkMapping: { mckinsey7s: 'Structure', burkeLitwin: 'Management Practices' },
+        odFrameworkMapping: { mckinsey7s: 'Structure', burkeLitwin: 'Management Practices', adkar: 'Ability' },
         extractedKeywords: ['shift swap', 'paper forms', 'supervisors', 'bottleneck']
       },
       {
@@ -268,7 +279,7 @@ export const DATASET_PRESETS: DatasetPreset[] = [
         intensity: 'Severe',
         primaryEmotion: 'Cultural Erosion',
         dominantTheme: 'Feedback Latency & Punitive Focus',
-        odFrameworkMapping: { mckinsey7s: 'Style', burkeLitwin: 'Leadership' },
+        odFrameworkMapping: { mckinsey7s: 'Style', burkeLitwin: 'Leadership', adkar: 'Desire' },
         extractedKeywords: ['nursing staff', 'overtime', 'admin disconnect', 'punitive']
       }
     ]
@@ -495,6 +506,130 @@ export const INITIAL_OD_ANALYSIS: ODAnalysisResult = {
       identifiedIssue: 'Clarity on career progression'
     }
   ],
+  adkar: [
+    {
+      stage: 'Awareness',
+      fullName: 'Awareness of the Need for Change',
+      score: 54,
+      status: 'Friction Gap',
+      isBarrierPoint: true,
+      summary: 'Strategic misalignment between Sales commitments and Product roadmaps leaves engineering unsure of priority reasons.',
+      signalsCount: 3,
+      workforceVoiceGaps: [
+        'Unclear rationale for emergency sales commitments interrupting sprint roadmaps',
+        'Ownership void leaves engineers guessing who holds final architectural authority'
+      ],
+      prescribedTactics: [
+        'Executive Sponsor Roadshow with live interactive Slido Q&A',
+        'Centralized Notion "Why We Are Changing" contextual hubs',
+        '2-minute asynchronous Loom video walk-throughs from project champions'
+      ],
+      suggestedNoCodeTool: 'Notion PRD & Loom Executive Briefs',
+      evidenceQuotes: [
+        '"I never know who is truly responsible for the checkout service architecture decision."',
+        '"Sales promises features to enterprise leads that are not on our roadmap."'
+      ],
+      readinessDimension: 'Cognitive'
+    },
+    {
+      stage: 'Desire',
+      fullName: 'Desire to Support & Participate in Change',
+      score: 46,
+      status: 'Critical Barrier',
+      isBarrierPoint: false,
+      summary: 'Desire dampened by perceptions of promotion politics and lack of personal recognition for consistent craftsmanship.',
+      signalsCount: 2,
+      workforceVoiceGaps: [
+        'Cynicism around core values vs. political promotion practices',
+        'Manager isolation creates feeling of working in transactional silos'
+      ],
+      prescribedTactics: [
+        'Cross-functional co-design sessions to incorporate front-line input',
+        'Highlight personal pain relief (e.g., cutting 2 hours of ticket reconciliation)',
+        'Empower peer change champions across each impacted functional team'
+      ],
+      suggestedNoCodeTool: 'Slack Co-Design Channels & Typeform Pulse',
+      evidenceQuotes: [
+        '"Our core values are plastered on the website, but promotions always go to loud political voices."',
+        '"My manager only talks to me during my yearly performance review."'
+      ],
+      readinessDimension: 'Motivational'
+    },
+    {
+      stage: 'Knowledge',
+      fullName: 'Knowledge on How to Change & Execute',
+      score: 58,
+      status: 'Friction Gap',
+      isBarrierPoint: false,
+      summary: 'Handoff documentation and operational directories are fragmented across Jira, Linear, Figma, and PagerDuty.',
+      signalsCount: 2,
+      workforceVoiceGaps: [
+        'Figma comments lost during design-to-engineering handoffs without notification specs',
+        'Critical incident responders struggle to identify on-call engineers during outages'
+      ],
+      prescribedTactics: [
+        'Auto-generated step-by-step visual guides via Scribe/Tango',
+        'Contextual tooltips embedded directly into Airtable/Monday fields',
+        'Weekly 15-minute "Office Hours" and sandbox practice environments'
+      ],
+      suggestedNoCodeTool: 'Scribe / Tango Interactive SOPs & Guru Cards',
+      evidenceQuotes: [
+        '"Cross-team handoffs between Design and Front-End feel like throwing assets over a brick wall."',
+        '"It takes 4 hours just to find who is on-call because PagerDuty isn\'t synced."'
+      ],
+      readinessDimension: 'Capability'
+    },
+    {
+      stage: 'Ability',
+      fullName: 'Ability to Implement New Skills & Behaviors',
+      score: 36,
+      status: 'Critical Barrier',
+      isBarrierPoint: false,
+      summary: 'Heavy operational overhead from reconciling 3 parallel tracking tools and navigating 5-signature approval gates blocks implementation.',
+      signalsCount: 4,
+      workforceVoiceGaps: [
+        '2 hours every Monday spent manually reconciling tickets across Jira, Linear, and Spreadsheets',
+        '14-day approval delays for basic $500 subscriptions across 3 departments'
+      ],
+      prescribedTactics: [
+        'Eliminate manual data re-entry with Make.com event triggers',
+        'Establish protected 2-hour weekly "process optimization" blocks',
+        '1-on-1 coaching by designated operational enablement leads'
+      ],
+      suggestedNoCodeTool: 'Zapier / Make.com Automated Guardrails',
+      evidenceQuotes: [
+        '"We use three different tools to track the exact same mobile initiative."',
+        '"Getting a $500 software subscription approved takes 5 signatures across 3 departments."'
+      ],
+      readinessDimension: 'Operational'
+    },
+    {
+      stage: 'Reinforcement',
+      fullName: 'Reinforcement to Sustain & Prevent Reversion',
+      score: 41,
+      status: 'Critical Barrier',
+      isBarrierPoint: false,
+      summary: 'Absence of continuous recognition loops leaves midnight troubleshooting unseen and leads teams to revert to shadow tools.',
+      signalsCount: 2,
+      workforceVoiceGaps: [
+        'Heroic peer contributions go unnoticed due to lack of peer-kudos systems',
+        'Process changes lack long-term telemetry dashboards to celebrate cycle time wins'
+      ],
+      prescribedTactics: [
+        'Automate public Slack kudos cards celebrating team adoption milestones',
+        'Live Looker Studio dashboard tracking cycle time drops and user adoption',
+        'Incorporate process hygiene into quarterly performance calibrations'
+      ],
+      suggestedNoCodeTool: 'Slack Kudos Bot & Looker Studio Dashboards',
+      evidenceQuotes: [
+        '"I see my peers doing incredible midnight troubleshooting and customer saves, but it goes completely unnoticed."',
+        '"Love the team spirit, but our velocity is bottlenecked by manual spreadsheets."'
+      ],
+      readinessDimension: 'Sustenance'
+    }
+  ],
+  adkarBarrierPoint: 'Awareness',
+  adkarOverallReadiness: 47,
   frictionPoints: [
     {
       id: 'fric-1',
